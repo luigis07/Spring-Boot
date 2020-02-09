@@ -26,14 +26,14 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	private Long id;
 
-	@Column
+	@Column(name = "first_name")
 	private String firstName;
-	@Column
+	@Column(name = "last_name")
 	private String lastName;
 	@Column
 	private String email;
-	@Column
-	private String username;
+	@Column(name = "username")
+	private String userName;
 	@Column
 	private String password;
 	
@@ -44,9 +44,8 @@ public class User implements Serializable {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
 	private Set<Rol> roles;
 
-	public User(Long id) {
+	public User() {
 		super();
-		this.id = id;
 	}
 
 	public Long getId() {
@@ -81,12 +80,12 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserNamee(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -116,7 +115,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", username=" + username + ", password=" + password + ", confirmPassword=" + confirmPassword
+				+ ", userName=" + userName + ", password=" + password + ", confirmPassword=" + confirmPassword
 				+ ", roles=" + roles + "]";
 	}
 
