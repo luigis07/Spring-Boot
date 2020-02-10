@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class User implements Serializable {
@@ -27,17 +28,27 @@ public class User implements Serializable {
 	private Long id;
 
 	@Column(name = "first_name")
+	@NotBlank
 	private String firstName;
+	
 	@Column(name = "last_name")
+	@NotBlank
 	private String lastName;
+	
 	@Column
+	@NotBlank
 	private String email;
+	
 	@Column(name = "username")
+	@NotBlank
 	private String userName;
+	
 	@Column
+	@NotBlank
 	private String password;
 	
 	@Transient
+	@NotBlank
 	private String confirmPassword;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -84,7 +95,7 @@ public class User implements Serializable {
 		return userName;
 	}
 
-	public void setUserNamee(String userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
