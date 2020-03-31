@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.boot.dto.ChangePasswordForm;
 import com.spring.boot.entity.User;
 import com.spring.boot.repository.UserRepository;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private boolean checkPasswordValid(User user) throws Exception {
-		if(user.getConfirmPassword() == null || user.getConfirmPassword().isEmpty()) {
+		if (user.getConfirmPassword() == null || user.getConfirmPassword().isEmpty()) {
 			throw new Exception("Confirm Password es obligatorio");
 		}
 		if (!user.getPassword().equals(user.getConfirmPassword())) {
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
 
 	/**
 	 * Map everythin but the password.
+	 * 
 	 * @param from
 	 * @param to
 	 */
@@ -74,5 +76,25 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(Long id) throws Exception {
 		User user = getUserById(id);
 		repository.delete(user);
+	}
+
+	@Override
+	public User changePassword(ChangePasswordForm form) throws Exception {
+		User user = getUserById(form.getId());
+
+		if (!user.getPassword().equals(form.getCurrentPassword())) {
+			throw new Exception("Current Password invaludo.");
+		}
+		
+		if (user.getPassword().equals(form.getNewPassword())) {
+			throw new Exception("Nuevo Password debe ser diferente al password actual");
+		}
+		
+		if (!form.getNewPassword().equals(form.getConfirmPassword())) {
+			throw new Exception("Nuevo Pasword y Current Password no coinciden");
+		}
+		
+		user.setPassword(form.getNewPassword());
+		return repository.save(user);
 	}
 }
